@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'jsm/controls/OrbitControls.js';
 import getStarfield from "./src/getStarfield.js";
+import {getFresnelMat} from "./src/getFresnelMat.js";
 
 // setting up the camera, scene and height and width of canvas
 const w = window.innerWidth ;
@@ -61,7 +62,7 @@ earthGroup.add(lightsMesh);
 
 // cloude mat
 const cloudeMat = new THREE.MeshStandardMaterial({
-    map: loader.load("./textures/04_earthcloudmap.jpg"),
+    map: loader.load("./textures/05_earthcloudmaptrans.jpg"),
     blending: THREE.AdditiveBlending
 
 })
@@ -70,6 +71,11 @@ const cloudeMat = new THREE.MeshStandardMaterial({
 const cloudeMesh = new THREE.Mesh(geomatry, cloudeMat);
 cloudeMesh.scale.setScalar(cloudeMesh);
 earthGroup.add(cloudeMesh);
+
+// get freshnel mat
+const fresnelMat = getFresnelMat();
+const glowMesh = new THREE.Mesh(geomatry, fresnelMat);
+earthGroup.add(glowMesh);
 
 // adding sunlight
 const sunLight = new THREE.DirectionalLight(0xffffff);
@@ -83,6 +89,9 @@ function animate(){
     earthMesh.rotation.y += 0.002;
     lightsMesh.rotation.y += 0.002;
     cloudeMesh.rotation.y += 0.002;
+    glowMesh.rotation.y += 0.002;
+    
+
     renderer.render(scene, camera);
     controls.update();
 }
