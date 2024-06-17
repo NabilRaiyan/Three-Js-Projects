@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'jsm/controls/OrbitControls.js';
-
+import getStarfield from "./src/getStarfield.js";
 
 // setting up the camera, scene and height and width of canvas
 const w = window.innerWidth ;
@@ -16,43 +16,73 @@ document.body.appendChild(renderer.domElement);
 const fov = 75;
 const aspect = w/h;
 const near = 0.1;
-const far = 10;
+const far = 1000;
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 
 camera.position.z = 2;
 
 const scene = new THREE.Scene();
 
+
+
+const earthGroup = new THREE.Group();
+earthGroup.rotation.z = -23.4 * Math.PI / 180;
+scene.add(earthGroup);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.03;
 
+
+const detail = 12;
 //  creating mesh and geometry object
-const geomatry = new THREE.BoxGeometry();
+const loader = new THREE.TextureLoader(); // creating texture loader
+const geomatry = new THREE.IcosahedronGeometry(1, detail);
 const material = new THREE.MeshStandardMaterial({
-    color: 0xffff00,
+    map: loader.load("./textures/00_earthmap1k.jpg"),
     
 });
 
-const cube = new THREE.Mesh(geomatry, material);
-scene.add(cube);
+const earthMesh = new THREE.Mesh(geomatry, material);
+earthGroup.add(earthMesh);
 
-const wireMat = new THREE.MeshBasicMaterial({
-    color: 0xffffff,
-    wireframe: true
+// making star 
+const stars = getStarfield({numStars: 1000});
+scene.add(stars);
+
+
+// adding light 
+const lightMat = new THREE.MeshBasicMaterial({
+    map: loader.load("./textures/03_earthlights1k.jpg"),
+    blending: THREE.AdditiveBlending
+});
+
+const lightsMesh = new THREE.Mesh(geomatry, lightMat);
+earthGroup.add(lightsMesh);
+
+// cloude mat
+const cloudeMat = new THREE.MeshStandardMaterial({
+    map: loader.load("./textures/04_earthcloudmap.jpg"),
+    blending: THREE.AdditiveBlending
+
 })
 
 
-const wireMesh = new THREE.Mesh(geomatry, wireMat);
-wireMesh.scale.setScalar(1.001);
-cube.add(wireMesh); // adding wire mesh as a child of mesh
+const cloudeMesh = new THREE.Mesh(geomatry, cloudeMat);
+cloudeMesh.scale.setScalar(cloudeMesh);
+earthGroup.add(cloudeMesh);
 
-const hemLight = new THREE.HemisphereLight(0x0097ff, 0xaa5500); // setting the lighting for the scene
-scene.add(hemLight);
+// adding sunlight
+const sunLight = new THREE.DirectionalLight(0xffffff);
+sunLight.position.set(-2, -0.5, 1.5);
+scene.add(sunLight);
 
-function animate(t = 0){
+
+
+function animate(){
     requestAnimationFrame(animate);
-    cube.rotation.y = t * 0.0001;
+    earthMesh.rotation.y += 0.002;
+    lightsMesh.rotation.y += 0.002;
+    cloudeMesh.rotation.y += 0.002;
     renderer.render(scene, camera);
     controls.update();
 }
