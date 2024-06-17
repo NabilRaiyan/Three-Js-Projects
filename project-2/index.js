@@ -42,6 +42,7 @@ const wireMat = new THREE.MeshBasicMaterial({
     wireframe: true
 })
 
+
 const wireMesh = new THREE.Mesh(geomatry, wireMat);
 wireMesh.scale.setScalar(1.001);
 cube.add(wireMesh); // adding wire mesh as a child of mesh
