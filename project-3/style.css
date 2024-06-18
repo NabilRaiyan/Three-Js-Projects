@@ -32,6 +32,18 @@ nav a{
   font-weight: bold;
 }
 
+.nav-link{
+  text-decoration: none;
+  font-weight: 300;
+  font-size: 1.1rem;
+  
+}
+
+.nav-link:hover{
+  color: rgb(255, 187, 62);
+}
+
+
 nav ul{
   list-style: none;
   display: flex;
@@ -77,4 +89,23 @@ span{
   color:cyan;
   font-family: "Playwrite PL", cursive;
 
+}
+
+.social-media{
+  color: white;
+  z-index: 2;
+  position: relative;
+  padding: 4rem 8rem;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.social{
+  text-decoration: none;
+  color: white;
+  margin: 10px;
+}
+
+.social:hover{
+  color: rgb(255, 204, 110);
 }
