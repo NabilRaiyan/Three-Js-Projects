@@ -1,10 +1,12 @@
 import * as THREE from "three";
 import "./style.css";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
+
 // scene 
 const scene = new THREE.Scene();
 
 // create shape
-const geomatry = new THREE.SphereGeometry(3, 64, 64);
+const geomatry = new THREE.SphereGeometry(3, 70, 70);
 const material = new THREE.MeshStandardMaterial({
   color: "#00ff83",
   
@@ -35,7 +37,41 @@ scene.add(camera);
 const canvas = document.querySelector(".webgl");
 const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(2);
+
 
 // rendering camera and scene
 renderer.render(scene, camera); 
 
+// resize
+window.addEventListener('resize', ()=>{
+
+  // update window sizes
+  sizes.width = window.innerWidth,
+  sizes.height = window.innerHeight
+
+  // update camera
+  camera.updateProjectionMatrix();
+  camera.aspect = sizes.width / sizes.height;
+  renderer.setSize(sizes.width, sizes.height);
+})
+
+
+
+// controlling the sphere
+const controll = new OrbitControls(camera, renderer.domElement);
+controll.enableDamping = true;
+controll.enablePan = false;
+controll.enableZoom = false;
+controll.autoRotate = true;
+controll.autoRotateSpeed = 10;
+
+
+
+//  re-render the whole canvas
+function animate(){
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+  controll.update();
+}
+animate();
