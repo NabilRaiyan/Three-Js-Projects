@@ -42,9 +42,39 @@ h1{
   color: white;
   position: absolute;
   z-index: 4;
-  font-size: 3rem;
-  font-weight: 300;
+  font-size: 1.8rem;
+  font-weight: 70;
   left: 50%;
   top: 25%;
-  transform: translate(-50%, 320%);
+  transform: translate(-50%, 350%);
+}
+
+.name{
+  color: aliceblue;
+  position: absolute;
+  z-index: 3;
+  font-size: 2.5rem;
+  font-weight: 130;
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -150%);
+  
+}
+
+.intro{
+  color: aliceblue;
+  position: absolute;
+  z-index: 3;
+  font-size: 1.1rem;
+  font-weight: 150;
+  left: 50%;
+  top: 25%;
+  font-family: "Playwrite PL", cursive;
+  transform: translate(-50%, -100%);
+}
+
+span{
+  color:cyan;
+  font-family: "Playwrite PL", cursive;
+
 }
