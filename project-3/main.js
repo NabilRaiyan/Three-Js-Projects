@@ -6,16 +6,27 @@ import gsap from "gsap";
 // scene 
 const scene = new THREE.Scene();
 
-// create shape
+// create sphere shape
 const geomatry = new THREE.SphereGeometry(3, 70, 70);
 const material = new THREE.MeshStandardMaterial({
   color: "#6cc9ff",
-  roughness: 0.2,
+  roughness: 0.10,
   
 })
 
 const mesh = new THREE.Mesh(geomatry, material);
 scene.add(mesh);
+
+
+// create Torus Geometry shape
+const torusGeomatry = new THREE.TorusGeometry(5, 0.03, 25, 150);
+const torusMaterial = new THREE.MeshStandardMaterial({
+  color: "#FFA500",
+  roughness: 0.6,
+})
+
+const torusMesh = new THREE.Mesh(torusGeomatry, torusMaterial);
+scene.add(torusMesh);
 
 // view port sizes 
 const sizes = {
@@ -32,7 +43,7 @@ scene.add(light);
 
 // creating a camera
 const camera = new THREE.PerspectiveCamera(45, sizes.width/sizes.height, 0.1, 100);
-camera.position.z = 16;
+camera.position.z = 20;
 scene.add(camera);
 
 // rendering the scene into html
@@ -72,8 +83,10 @@ controll.autoRotateSpeed = 10;
 
 
 //  re-render the whole canvas
-function animate(){
+function animate(t = 1){
   requestAnimationFrame(animate);
+  torusMesh.rotation.x = t * 0.0001;
+  torusMesh.rotation.y = t * 0.0001;
   renderer.render(scene, camera);
   controll.update();
 }
@@ -112,5 +125,7 @@ window.addEventListener('mousemove', (e)=>{
     // animate color
     let newColor = new THREE.Color(`rgb(${rgb.join(",")})`);
     gsap.to(mesh.material.color, {r: newColor.r, g: newColor.g, b: newColor.b});
+    gsap.to(torusMesh.material.color, {r: newColor.r + 20, g: newColor.g = 2, b: newColor.b});
+
   }
 })

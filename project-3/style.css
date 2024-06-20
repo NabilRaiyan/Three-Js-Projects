@@ -40,7 +40,7 @@ nav a{
 }
 
 .nav-link:hover{
-  color: rgb(255, 187, 62);
+  color: rgb(0, 255, 234);
 }
 
 
@@ -107,5 +107,5 @@ span{
 }
 
 .social:hover{
-  color: rgb(255, 204, 110);
+  color: rgb(0, 255, 234);
 }
