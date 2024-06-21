@@ -70,7 +70,6 @@ window.addEventListener('resize', ()=>{
 })
 
 
-
 // controlling the sphere
 const controll = new OrbitControls(camera, renderer.domElement);
 controll.enableDamping = true;
@@ -78,7 +77,6 @@ controll.enablePan = false;
 controll.enableZoom = false;
 controll.autoRotate = true;
 controll.autoRotateSpeed = 10;
-
 
 
 //  re-render the whole canvas
