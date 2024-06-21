@@ -10,6 +10,7 @@ body, html{
   font-family: "Poppins", sans-serif;
 }
 
+/* canvas style */
 .webgl{
   position: absolute;
   top: 0;
