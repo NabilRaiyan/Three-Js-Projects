@@ -69,7 +69,6 @@ window.addEventListener('resize', ()=>{
   renderer.setSize(sizes.width, sizes.height);
 })
 
-
 // controlling the sphere
 const controll = new OrbitControls(camera, renderer.domElement);
 controll.enableDamping = true;
