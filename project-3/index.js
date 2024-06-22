@@ -99,7 +99,6 @@ timeLine.fromTo('.social-media', {x: "-200%"}, {x: '-2%'})
 timeLine.fromTo('.title', {opacity: 0}, {opacity: 1});
 
 
-
 // Mouse animation color
 let mouseDown = false;
 let rgb = [];
