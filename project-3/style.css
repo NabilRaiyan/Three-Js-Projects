@@ -41,6 +41,7 @@ nav a{
   
 }
 
+/* nav link hover */
 .nav-link:hover{
   color: rgb(0, 255, 234);
 }
