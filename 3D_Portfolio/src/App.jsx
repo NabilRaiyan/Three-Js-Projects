@@ -1,3 +1,6 @@
+// until 1 hr
+// link: https://www.youtube.com/watch?v=FkowOdMjvYo 
+
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import { Home, Contact, About, Projects } from "./pages"
