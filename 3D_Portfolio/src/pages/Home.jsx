@@ -5,8 +5,11 @@ import Island from '../models/Island'
 import Sky from '../models/Sky'
 import Bird from '../models/Bird'
 import Plane from '../models/Plane'
+import { useState } from 'react'
 
 const Home = () => {
+
+  const [isRotating, setIsRotating] = useState(false)
 
   const adjustIslandForScreenSize = () => {
     let screenScale = null;
@@ -24,7 +27,26 @@ const Home = () => {
     return [screenScale, screenPosition]
   }
 
+
+  const adjustPlaneForScreenSize = () => {
+    let screenScale, screenPosition = null;
+
+
+    if(window.innerWidth < 768){
+      screenScale = [1.5, 1.5, 1.5]
+      screenPosition = [0, -1.5, 0]
+    }
+    else{
+      screenScale = [3, 3, 3]
+      screenPosition = [0, -4, -4]
+    }
+
+    return [screenScale, screenPosition]
+  }
+
   const [islandScale, islandPosition, islandRotation] = adjustIslandForScreenSize();
+  const [planeScale, planePosition] = adjustPlaneForScreenSize();
+
 
   return (
     <section className='w-full h-screen relative'>
@@ -33,7 +55,7 @@ const Home = () => {
       </div> */}
 
         <Canvas 
-            className='w-full h-screen relative'
+            className={`w-full h-screen relative ${isRotating ? 'cursor-grabbing' : 'cursor-grab'}`}
             camera={{near: 0.1, far: 1000}}
         >
           <Suspense fallback={<Loader />}>
@@ -43,8 +65,17 @@ const Home = () => {
 
               <Sky />
               <Bird />
-              <Island position = {islandPosition} scale = {islandScale} rotation = {islandRotation} />
-              <Plane />
+              <Island 
+                  position = {islandPosition} 
+                  scale = {islandScale} 
+                  rotation = {islandRotation}
+                  isRotating={isRotating}
+                  setIsRotating={setIsRotating}
+               />
+              <Plane isRotating={isRotating} 
+                     rotation= {[0, 20, 0]} 
+                     position = {planePosition } 
+                     scale = {planeScale}  />
           </Suspense>
         
         </Canvas>
