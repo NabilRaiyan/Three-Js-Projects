@@ -5,8 +5,7 @@ import { Home, Contact, About, Projects } from "./pages"
 function App() {
 
   return (
-    <main className="bg-slate-300
-    /20">
+    <main className="bg-violet-100/50">
         <Router>
           <Navbar />
           <Routes>
