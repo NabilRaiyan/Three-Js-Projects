@@ -15,6 +15,11 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
     const rotationSpeen = useRef(0)
     const dampingFactor = 0.95;
 
+    const handlePointDown = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
   const { nodes, materials } = useGLTF(islandScene)
   return (
     <a.group ref={islandRef} {...props} dispose={null}>
