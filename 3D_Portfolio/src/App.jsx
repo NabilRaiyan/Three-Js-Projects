@@ -1,4 +1,4 @@
-// until 1 hr
+// until 1 hr 13 min 
 // link: https://www.youtube.com/watch?v=FkowOdMjvYo 
 
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
