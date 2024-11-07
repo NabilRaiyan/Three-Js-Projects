@@ -30,14 +30,6 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
       e.preventDefault();
 
       setIsRotating(false)
-
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const delta = (clientX = lastX.current) / viewport.width;
-
-      islandRef.current.rotation.y += delta * 0.01 * Math.PI;
-
-      lastX.current = clientX;
-      rotationSpeed.current = delta * 0.01 * Math.PI;
     }
 
     const handlePointMove = (e) => {
@@ -45,7 +37,13 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
       e.preventDefault();
 
       if (isRotating){
-        handlePointUp(e);
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const delta = (clientX - lastX.current) / viewport.width;
+
+        islandRef.current.rotation.y += delta * 0.03 * Math.PI;
+
+        lastX.current = clientX;
+        rotationSpeed.current = delta * 0.03 * Math.PI;
       }
     }
 
@@ -53,12 +51,12 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
       if(e.key === 'ArrowLeft'){
         if(!isRotating){
           setIsRotating(true);
-          islandRef.current.rotation.y += 0.01 * Math.PI;
+          islandRef.current.rotation.y += 0.005 * Math.PI;
         }
         else if(e.key === 'ArrowRight'){
           if(!isRotating){
             setIsRotating(true);
-            islandRef.current.rotation.y -= 0.01 * Math.PI;
+            islandRef.current.rotation.y -= 0.005 * Math.PI;
           }
         }
       }
@@ -72,7 +70,7 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
 
     useFrame(() => {
       if(!isRotating) {
-        rotationSpeed.current *= dumpingFactor;
+        rotationSpeed.current *= dampingFactor;
         if (Math.abs(rotationSpeed.current) < 0.01){
           rotationSpeed.current = 0;
         }
