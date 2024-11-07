@@ -70,6 +70,10 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
       }
     }
 
+    useFrame(() => {
+      
+    })
+
     useEffect(() => {
       document.addEventListener('pointerdown', handlePointDown);
       document.addEventListener('pointerup', handlePointUp);
