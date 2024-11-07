@@ -12,7 +12,7 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
     const islandRef = useRef();
     const {gl, viewport } = useThree()
     const lastX = useRef(0);
-    const rotationSpeen = useRef(0)
+    const rotationSpeed = useRef(0)
     const dampingFactor = 0.95;
 
     const handlePointDown = (e) => {
@@ -20,6 +20,9 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
       e.preventDefault();
 
       setIsRotating(true)
+
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      lastX.current = clientX;
     }
 
     const handlePointUp = (e) => {
@@ -27,12 +30,37 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
       e.preventDefault();
 
       setIsRotating(false)
+
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const delta = (clientX = lastX.current) / viewport.width;
+
+      islandRef.current.rotation.y += delta * 0.01 * Math.PI;
+
+      lastX.current = clientX;
+      rotationSpeed.current = delta * 0.01 * Math.PI;
     }
 
     const handlePointMove = (e) => {
       e.stopPropagation();
       e.preventDefault();
+
+      if (isRotating){
+        handlePointUp(e);
+      }
     }
+
+    useEffect(() => {
+      document.addEventListener('pointerdown', handlePointDown);
+      document.addEventListener('pointerup', handlePointUp);
+      document.addEventListener('pointermove', handlePointMove);
+
+      return () => {
+        document.addEventListener('pointerdown', handlePointDown);
+        document.addEventListener('pointerup', handlePointUp);
+        document.addEventListener('pointermove', handlePointMove);
+      }
+
+    }, [gl, handlePointDown, handlePointUp, handlePointMove])
 
   const { nodes, materials } = useGLTF(islandScene)
   return (
