@@ -74,6 +74,7 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
         if (Math.abs(rotationSpeed.current) < 0.01){
           rotationSpeed.current = 0;
         }
+        islandRef.current.rotation.y += rotationSpeed.current;
       }
       else{
         const rotation = islandRef.current.rotation.y;
