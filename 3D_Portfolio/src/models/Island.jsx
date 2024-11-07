@@ -18,6 +18,20 @@ const Island = ({isRotating, setIsRotating, ...props}) => {
     const handlePointDown = (e) => {
       e.stopPropagation();
       e.preventDefault();
+
+      setIsRotating(true)
+    }
+
+    const handlePointUp = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      setIsRotating(false)
+    }
+
+    const handlePointMove = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
     }
 
   const { nodes, materials } = useGLTF(islandScene)
