@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import { Home, Contact, About, Projects } from "./pages"
 
+// App function
 function App() {
 
   return (
